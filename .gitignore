@@ -1,0 +1,7 @@
+verify/snap-bin
+verify/fixtures-*.txt
+figures/gen
+figures/panels.tex
+*.o
+.DS_Store
+__pycache__/

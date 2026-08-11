@@ -1,0 +1,70 @@
+# Signal Rail
+
+Accompanying materials for the paper *The Signal Rail: A Deterministic
+Motion Grammar for Communicating Conversational Agent State in Terminal
+Interfaces* (arXiv link forthcoming).
+
+The Signal Rail is a one-row terminal status instrument for
+conversational agents. The row is divided into input, processing, and
+output zones that mirror the interaction pipeline; each of twelve agent
+states has a distinct motion rule (listening expands, captured input
+collapses, thinking reads, speaking emits, acting advances, waiting
+freezes, errors fracture, interruption cuts), so no state is
+distinguished by color alone. Every frame is a pure function of state,
+entry tick, tick, width, quantized signal levels, and a seed: animation
+becomes testable like any other program output.
+
+## Contents
+
+| Path | What it is |
+|---|---|
+| `SIGNAL-RAIL-1.0.md` | The normative specification (45 sections, RFC-2119 style) |
+| `rail.js` | JavaScript engine (UMD: browser `<script>` or Node `require`) |
+| `rail.py` | Python engine (stdlib only, 3.8+), with an ANSI renderer: `python3 rail.py` prints every state |
+| `demo.html` | Interactive browser demo, fully self-contained (engine inlined): download the one file and open it |
+| `verify/` | Self-contained cross-implementation conformance harness |
+| `figures/` | Generator for the paper's figure panels |
+
+The reference implementation lives in a working full-duplex local voice
+agent: [`examples/voiceagent/rail.zig`](https://github.com/matteo-grella/fucina/blob/main/examples/voiceagent/rail.zig)
+in the fucina repository. The Zig sources vendored here
+(`verify/rail-vendored.zig`, `figures/rail.zig`) are pinned copies of
+that file at commit `9c24016`.
+
+## Verifying parity
+
+```sh
+./verify/run.sh
+```
+
+Requires zig 0.16, node 16+, and python3 3.8+; no network. The script
+generates an 888-line fixture matrix from all three engines, comparing
+full logical cells (glyph, color role, emphasis), covering 11 states,
+widths 25/37/49/61, 9 ticks, both motion modes, determinate ACTING, and
+64-bit seed boundaries (0, 2^31+1, 2^53-1, 2^64-1). The three outputs
+must be byte-identical. Expected SHA-256 of the fixture file:
+
+```
+85e4e0b198ca9507498a852264b1589cad8239282cb19bd3410286ac658855ff
+```
+
+## Regenerating the paper figures
+
+```sh
+cd figures && zig build-exe gen.zig && ./gen 2> panels.tex
+```
+
+`RAILSPLIT` lines separate the three panels (primary loop, attention
+states, listening ladder). The panels are LaTeX color runs typeset in a
+monospace font on the `#07090B` background; every frame is produced by
+the vendored reference engine at the context tuples recorded in
+`gen.zig`.
+
+## Demo controls
+
+Open `demo.html` in a browser. The sliders are real inputs: listening
+amplitude, speaking spawn rate, and acting progress pass through the
+specification's quantizer and stepped meter response. Set input level to
+zero and listening goes still; check "progress unknown" and the
+percentage disappears rather than inventing one. Keys `[` and `]` cycle
+states.

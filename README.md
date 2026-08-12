@@ -4,6 +4,8 @@ The paper *The Signal Rail: A Deterministic Motion Grammar for
 Communicating Conversational Agent State in Terminal Interfaces* (arXiv
 link forthcoming) and its accompanying materials.
 
+![The Signal Rail in a live voice-agent session](demo.gif)
+
 The Signal Rail is a one-row terminal status instrument for
 conversational agents. The row is divided into input, processing, and
 output zones that mirror the interaction pipeline; each of twelve agent

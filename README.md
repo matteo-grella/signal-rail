@@ -1,8 +1,9 @@
 # Signal Rail
 
 The paper *The Signal Rail: A Deterministic Motion Grammar for
-Communicating Conversational Agent State in Terminal Interfaces* (arXiv
-link forthcoming) and its accompanying materials.
+Communicating Conversational Agent State in Terminal Interfaces*
+([arXiv:2608.10689](https://arxiv.org/abs/2608.10689)) and its
+accompanying materials.
 
 ![The Signal Rail in a live voice-agent session](demo.gif)
 
